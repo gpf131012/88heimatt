@@ -63,10 +63,22 @@ export default {
   },
   methods: {
     login () {
-      this.$refs.myForm.validate(function (isok) {
+      this.$refs.myForm.validate((isok) => {
         if (isok) {
         //   console.log('校验成功')
-
+          this.$axios({
+            url: '/authorizations',
+            data: this.loginForm,
+            method: 'post'
+          }).then(result => {
+            window.localStorage.setItem('user-token', result.data.data.token)
+            this.$router.push('/home')
+          }).catch(() => {
+            return this.$message({
+              message: '手机号或验证码错误',
+              type: 'warning'
+            })
+          })
         }
       })
     }
