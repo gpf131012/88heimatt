@@ -65,7 +65,8 @@ export default {
     login () {
       this.$refs.myForm.validate(function (isok) {
         if (isok) {
-          console.log('校验成功')
+        //   console.log('校验成功')
+
         }
       })
     }
