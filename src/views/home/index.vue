@@ -29,7 +29,7 @@
 
   <el-container>
     <el-header>
-      头部
+      <layout-header></layout-header>
     </el-header>
     <!-- 中间区域 -->
     <el-main>
@@ -40,11 +40,12 @@
 </template>
 
 <script>
+import header from '../../components/layout-header.vue'
 // import HelloWorld from '@components/HelloWorld.vue'
 export default {
   name: 'home',
   components: {
-
+    'layout-header': header
   }
 }
 </script>
