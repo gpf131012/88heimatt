@@ -55,5 +55,27 @@ const routes = [
 const router = new VueRouter({
   routes
 })
+// 路由拦截器beforeEach方法，接收一个函数作为参数
+// 参数1：to 表示要去哪里的路由信息
+// 参数2：from 表示来自哪里的路由信息
+// 参数3：next 是一个方法，表示路由放行
+
+// 路由导航守卫
+router.beforeEach((to, from, next) => {
+  // 如果访问的是登录页面，直接放行
+  if (to.path === '/login') {
+    return next()
+  }
+  // 非登陆页面校验登录状态
+  // 获取用户token
+  const token = window.localStorage.getItem('user-token')
+  // 判断是否有token
+  if (token) {
+    next()
+  } else {
+    // 没有返回登录页
+    next('/login')
+  }
+})
 
 export default router
