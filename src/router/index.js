@@ -7,6 +7,7 @@ import article from '@/views/article'
 import pubilish from '@/views/publish'
 import comment from '@/views/comment'
 import material from '@/views/material'
+import NProgress from 'nprogress'
 Vue.use(VueRouter)
 
 const routes = [
@@ -62,6 +63,8 @@ const router = new VueRouter({
 
 // 路由导航守卫
 router.beforeEach((to, from, next) => {
+  // 开启进度条
+  NProgress.start()
   // 如果访问的是登录页面，直接放行
   if (to.path === '/login') {
     return next()
@@ -75,7 +78,11 @@ router.beforeEach((to, from, next) => {
   } else {
     // 没有返回登录页
     next('/login')
+    // 为了如果在非登陆状态下访问登录页面，手动终止进度条
+    NProgress.done()
   }
 })
-
+router.afterEach((to, from) => {
+  NProgress.done()
+})
 export default router

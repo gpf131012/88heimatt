@@ -5,7 +5,8 @@ import elementUI from 'element-ui'
 import axios from 'axios'
 import 'element-ui/lib/theme-chalk/index.css'
 import './style/index.less'
-// import '/nprogress/nprogress.css'
+// 第三方包的文件不需要写具体路径
+import 'nprogress/nprogress.css'
 Vue.config.productionTip = false
 Vue.use(elementUI)
 axios.defaults.baseURL = 'http://ttapi.research.itcast.cn/mp/v1_0'

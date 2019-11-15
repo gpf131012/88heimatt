@@ -12,7 +12,8 @@
                <el-dropdown-menu slot="dropdown">
                    <el-dropdown-item>账户信息</el-dropdown-item>
                    <el-dropdown-item>git信息</el-dropdown-item>
-                   <el-dropdown-item>退出</el-dropdown-item>
+                   <el-dropdown-item @click.native="onlogin">退出</el-dropdown-item>
+                <!-- 给组件注册一个原生事件，需要加native -->
                </el-dropdown-menu>
           </el-dropdown>
       </el-col>
@@ -22,6 +23,27 @@
 <script>
 export default {
 
+  methods: {
+    onlogin () {
+      this.$confirm('确认退出吗？', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        window.localStorage.removeItem('user-token')
+        this.$router.push('/login')
+        this.$message({
+          type: 'success',
+          message: '退出成功!'
+        })
+      }).catch(() => {
+        this.$message({
+          type: 'info',
+          message: '已取消退出'
+        })
+      })
+    }
+  }
 }
 </script>
 
