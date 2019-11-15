@@ -72,7 +72,7 @@ export default {
             method: 'post'
           }).then(result => {
             window.localStorage.setItem('user-token', result.data.data.token)
-            this.$router.push('/home')
+            this.$router.push('/')
           }).catch(() => {
             this.$message({
               message: '手机号或验证码错误',
