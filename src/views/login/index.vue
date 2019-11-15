@@ -74,7 +74,7 @@ export default {
             window.localStorage.setItem('user-token', result.data.data.token)
             this.$router.push('/home')
           }).catch(() => {
-            return this.$message({
+            this.$message({
               message: '手机号或验证码错误',
               type: 'warning'
             })

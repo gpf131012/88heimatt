@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-
-  </div>
+  <div>素材管理</div>
 </template>
 
 <script>

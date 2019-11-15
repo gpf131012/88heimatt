@@ -41,6 +41,7 @@ export default {
     align-items: center;
     img{
         border-radius:50%;
+        width: 40px;
     }
 }
 </style>

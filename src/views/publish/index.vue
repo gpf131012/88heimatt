@@ -1,7 +1,5 @@
 <template>
-  <div class="home">
-
-  </div>
+  <div>发布文章</div>
 </template>
 
 <script>
