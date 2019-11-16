@@ -83,11 +83,11 @@
       <el-table-column
         prop="operate"
         label="操作">
-        <template>
+        <template slot-scope="scope">
         <!-- <i class="el-icon-edit" style="margin-right:8 px">编辑</i> -->
          <el-link icon="el-icon-edit">编辑</el-link>
         <!-- <i class="el-icon-delete">删除</i> -->
-         <el-link icon="el-icon-delet"  class="el-icon-delete">删除</el-link>
+         <el-link icon="el-icon-delet"  class="el-icon-delete" @click="onDelect(scope.row.id)">删除</el-link>
         </template>
       </el-table-column>
     </el-table>
@@ -143,7 +143,8 @@ export default {
       ],
       totalCount: 0,
       loading: true,
-      channels: [] // 频道列表
+      channels: [],
+      page: 0 // 频道列表
     }
   },
   created () {
@@ -184,6 +185,7 @@ export default {
     },
     onPageChange (page) {
       // console.log(page)
+      this.page = page
       this.loadArticles(page)
     },
     loaadArticles (page) {
@@ -197,6 +199,19 @@ export default {
         this.channels = res.data.data.channels
       }).catch(err => {
         console.log(err, '获取失败')
+      })
+    },
+    onDelect (articleId) {
+      this.$axios({
+        method: 'DELETE',
+        url: `/articles/${articleId}`,
+        headers: {
+          Authorization: `Bearer ${window.localStorage.getItem('user-token')}`
+        }
+      }).then(res => {
+        this.loadArticles(this.page)
+      }).catch(err => {
+        console.log(err, '删除失败')
       })
     }
   }
