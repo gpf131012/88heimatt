@@ -46,7 +46,7 @@
 
 <script>
 import header from '../../components/layout-header.vue'
-// import HelloWorld from '@components/HelloWorld.vue'
+
 export default {
   name: 'home',
   components: {
