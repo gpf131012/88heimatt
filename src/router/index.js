@@ -30,7 +30,12 @@ const routes = [
       {
         path: '/publish',
         component: pubilish
-      }, {
+      },
+      {
+        path: '/publish/:articleId',
+        component: pubilish
+      },
+      {
         path: '/comment',
         component: comment
       }, {

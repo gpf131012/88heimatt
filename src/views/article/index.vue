@@ -85,7 +85,7 @@
         label="操作">
         <template slot-scope="scope">
         <!-- <i class="el-icon-edit" style="margin-right:8 px">编辑</i> -->
-         <el-link icon="el-icon-edit">编辑</el-link>
+         <el-link icon="el-icon-edit" @click="$router.push('/publish/' + scope.row.id)">编辑</el-link>
         <!-- <i class="el-icon-delete">删除</i> -->
          <el-link icon="el-icon-delet"  class="el-icon-delete" @click="onDelect(scope.row.id)">删除</el-link>
         </template>
@@ -144,7 +144,7 @@ export default {
       totalCount: 0,
       loading: true,
       channels: [],
-      page: 0 // 频道列表
+      page: 1 // 频道列表
     }
   },
   created () {
@@ -155,16 +155,16 @@ export default {
     // page用于传递
     loadArticles (page = 1) {
       this.loading = true
-      const token = window.localStorage.getItem('user-token')
+      // const token = window.localStorage.getItem('user-token')
       this.$axios({
         method: 'GET',
         url: '/articles',
-        headers: {
-        // 名字：值
-        // 后端把token放到请求头中，使用的名字Authorization
-        // token要求格式Bearer 用户token
-          Authorization: `Bearer ${token}`
-        },
+        // headers: {
+        // // 名字：值
+        // // 后端把token放到请求头中，使用的名字Authorization
+        // // token要求格式Bearer 用户token
+        //   Authorization: `Bearer ${token}`
+        // },
         params: {
           page,
           per_page: 10,
@@ -203,11 +203,11 @@ export default {
     },
     onDelect (articleId) {
       this.$axios({
-        method: 'DELETE',
-        url: `/articles/${articleId}`,
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem('user-token')}`
-        }
+        method: 'delete',
+        url: `/articles/${articleId}`
+        // headers: {
+        //   Authorization: `Bearer ${window.localStorage.getItem('user-token')}`
+        // }
       }).then(res => {
         this.loadArticles(this.page)
       }).catch(err => {

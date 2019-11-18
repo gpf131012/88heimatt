@@ -50,6 +50,7 @@ import 'quill/dist/quill.core.css'
 import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 import { quillEditor } from 'vue-quill-editor'
+// import { type } from 'os'
 export default {
   name: 'PublishArticle',
   components: {
@@ -71,16 +72,27 @@ export default {
   },
   created () {
     this.loadChannels()
+    // 添加和编辑都用这个组件，只有编辑在初始化的时候才需要加载文章内容
+    if (this.$route.params.articleId) {
+      this.loadArticle()
+    }
   },
   methods: {
     onsubmit (draft) {
+      if (this.$route.params.articleId) {
+        this.updataArticle(draft)
+      } else {
+        this.addArtixle(draft)
+      }
       // console.log('submit')
+    },
+    addArtixle (draft) {
       this.$axios({
         method: 'POST',
         url: '/articles',
-        headers: {
-          Authorization: `Bearer ${window.localStorage.getItem('user-token')}`
-        },
+        // headers: {
+        //   Authorization: `Bearer ${window.localStorage.getItem('user-token')}`
+        // },
         params: {
           draft
         },
@@ -91,6 +103,24 @@ export default {
         console.log(err, '保存失败')
       })
     },
+    updataArticle (draft) {
+      this.$axios({
+        method: 'PUT',
+        url: `articles/${this.$route.params.articleId}`,
+        params: {
+          draft
+        },
+        data: this.article
+      }).then(res => {
+        this.$message({
+          type: 'success',
+          message: '修改成功'
+        })
+      }).catch(err => {
+        console.log(err)
+        this.$message.error('更新失败')
+      })
+    },
     loadChannels () {
       this.$axios({
         method: 'GET',
@@ -99,6 +129,14 @@ export default {
         this.channels = res.data.data.channels
       }).catch(err => {
         console.log(err, '获取失败')
+      })
+    },
+    loadArticle () {
+      this.$axios({
+        method: 'GET',
+        url: `articles/${this.$route.params.articleId}`
+      }).then(res => {
+        this.article = res.data.data
       })
     }
   }

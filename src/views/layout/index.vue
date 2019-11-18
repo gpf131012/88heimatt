@@ -38,7 +38,7 @@
     </el-header>
     <!-- 中间区域 -->
     <el-main>
-      <router-view></router-view>
+      <router-view :key="$route.pash"></router-view>
     </el-main>
   </el-container>
 </el-container>
