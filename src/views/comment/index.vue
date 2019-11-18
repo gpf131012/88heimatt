@@ -38,7 +38,10 @@
       </el-table-column>
     </el-table>
     <el-pagination
+    background
     layout="prev, pager, next"
+    :total="totalCount"
+    @current-change='onchange'
     >
   </el-pagination>
 </el-card>
@@ -49,24 +52,9 @@
 export default {
   data () {
     return {
-      // tableData: [{
-      //   date: '2016-05-02',
-      //   name: '王小虎',
-      //   address: '上海市普陀区金沙江路 1518 弄'
-      // }, {
-      //   date: '2016-05-04',
-      //   name: '王小虎',
-      //   address: '上海市普陀区金沙江路 1517 弄'
-      // }, {
-      //   date: '2016-05-01',
-      //   name: '王小虎',
-      //   address: '上海市普陀区金沙江路 1519 弄'
-      // }, {
-      //   date: '2016-05-03',
-      //   name: '王小虎',
-      //   address: '上海市普陀区金沙江路 1516 弄'
-      // }]
-      articles: []
+      articles: [],
+      totalCount: 0,
+      page: 1
     }
   },
   created () {
@@ -75,15 +63,18 @@ export default {
   components: {},
   props: {},
   methods: {
-    loadArtiles () {
+    loadArtiles (page = 1) {
       this.$axios({
         method: 'GET',
         url: '/articles',
         params: {
+          page,
           response_type: 'comment'
         }
       }).then(res => {
         this.articles = res.data.data.results
+        this.totalCount = res.data.data.total_count
+        console.log(res.data)
       }).catch(err => {
         console.log(err, '获取失败')
       })
@@ -107,6 +98,10 @@ export default {
         console.log(err)
         this.$message.error('操作失败')
       })
+    },
+    onchange (page) {
+      this.page = page
+      this.loadArtiles(page)
     }
   }
 
