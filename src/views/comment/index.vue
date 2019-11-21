@@ -34,7 +34,10 @@
       </el-table-column>
       <el-table-column
         label="操作">
-        <el-button type="primary" icon="el-icon-edit" circle></el-button>
+        <template slot-scope="scope">
+        <el-button @click="$router.push('/comment/' +scope.row.id)"> <i class="el-icon-edit"></i></el-button>
+        </template>
+
       </el-table-column>
     </el-table>
     <el-pagination

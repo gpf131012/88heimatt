@@ -6,6 +6,7 @@ import home from '@/views/home'
 import article from '@/views/article'
 import pubilish from '@/views/publish'
 import comment from '@/views/comment'
+import commentDetail from '@/views/comment-detail'
 import material from '@/views/material'
 import NProgress from 'nprogress'
 Vue.use(VueRouter)
@@ -38,9 +39,16 @@ const routes = [
       {
         path: '/comment',
         component: comment
+      },
+      {
+        path: '/comment/:articleId',
+        component: commentDetail,
+        // 将路由参数映射到组建的props数据
+        props: true
       }, {
         path: '/material',
         component: material
+
       }
 
     ]
