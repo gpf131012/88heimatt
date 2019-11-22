@@ -6,9 +6,9 @@
           <span>江苏传智播客教育科技股份有限公司</span>
       </el-col>
       <el-col :span="3" class="right">
-          <img src="../assets/img/avatar.jpg" alt="">
+          <img :src="user.photo" alt="">
           <el-dropdown trigger="click">
-               <span>觞儬</span>
+               <span>{{user.name}}</span>
                <el-dropdown-menu slot="dropdown">
                    <el-dropdown-item>账户信息</el-dropdown-item>
                    <el-dropdown-item>git信息</el-dropdown-item>
@@ -22,8 +22,29 @@
 
 <script>
 export default {
-
+  data () {
+    return {
+      user: {
+        name: '',
+        photo: ''
+      }
+    }
+  },
+  created () {
+    this.loadUser()
+  },
   methods: {
+    loadUser () {
+      this.$axios({
+        method: 'GET',
+        url: '/user/profile'
+      }).then(res => {
+        // console.log(res)
+        this.user = res.data.data
+      }).catch(() => {
+        this.$message.error('获取失败')
+      })
+    },
     onlogin () {
       this.$confirm('确认退出吗？', {
         confirmButtonText: '确定',
