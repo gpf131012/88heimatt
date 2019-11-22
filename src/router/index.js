@@ -9,6 +9,7 @@ import comment from '@/views/comment'
 import commentDetail from '@/views/comment-detail'
 import material from '@/views/material'
 import NProgress from 'nprogress'
+import account from '@/views/account'
 Vue.use(VueRouter)
 
 const routes = [
@@ -49,6 +50,9 @@ const routes = [
         path: '/material',
         component: material
 
+      }, {
+        path: '/account',
+        component: account
       }
 
     ]
